@@ -9,7 +9,6 @@ This table includes data that are gathered from the gyro in a cellular phone, as
 ### Packages used are:
 + sqldf
 + data.table
-+ 
 
 ### An example of sql syntax applied in the R code:
 
