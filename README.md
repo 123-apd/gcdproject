@@ -25,7 +25,7 @@ As you may have noticed, the assignment has been subject to a lot of discussion 
 ### List B - My interpretations and solutions
 1. I've merged the txt files subject_train.txt, y_train.txt, x_train.txt, subject_test.txt, y_test.txt, X_test.txt, features.txt and labels.txt 
 
-2. Fields (columns) in the files y_train.ttxt, y_test.txt, x_train.txt and x_test.txt NOT containing the substrings mean and std after the files have been combined with the file features.txt, have been dropped from the dataset. The resulting table is named table_tidy
+2. Fields (columns) in the files y_train.ttxt, y_test.txt, x_train.txt and x_test.txt NOT containing the substrings mean and std after the files have been combined with the file features.txt, have been dropped from the dataset. The resulting table is named table_mean_std. Note that the principles of tidy variable names will not be appplied fully until step 5.
 
 3. Labels / activitynames have been edited. Letters are now lowercase, and "_" have been removed. Labels have also been added to the dataset, so that the activity in each record (row) can be identified by name and not only the corresponding integer ID (This could just as well have been a part of the next step).
 
