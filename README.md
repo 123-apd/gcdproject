@@ -52,5 +52,5 @@ sqx1 <- sqldf("select subjects, actname, avg(timebody_accmeanx) from tbl_mean_ti
 ### What it does:
 It produces a part of the table requested in step 5 of the assignment. Note however that this table contains only ONE column with averages for ONE feature listed by subject and activity. In order to have all the requested fields added to the quiery and resulting table, I wrote a For Loop to include them in the string applied in the sqldf function.
 
-It'll all be clear once you have a look at the code in the 
+It'll all be clear once you have a look at the code in the runanalysis.R file
 
