@@ -23,7 +23,7 @@ As you may have noticed, the assignment has been subject to a lot of discussion 
 5. Create a second, independent tidy data set with the average of each variable for each activity and each subject.
 
 ### List B - My interpretations and solutions
-1. I've merged the txt files subject_train, y_train.txt
+1. I've merged the txt files subject_train.txt, y_train.txt, x_train.txt, subject_test.txt, y_test.txt, X_test.txt, features.txt and labels.txt 
 
 ### Packages used are:
 + sqldf
