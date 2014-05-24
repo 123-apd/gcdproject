@@ -25,14 +25,17 @@ As you may have noticed, the assignment has been subject to a lot of discussion 
 ### List B - My interpretations and solutions
 1. I've merged the txt files subject_train.txt, y_train.txt, x_train.txt, subject_test.txt, y_test.txt, X_test.txt, features.txt and labels.txt 
 
-2. Fields (columns) in the files y_train.ttxt, y_test.txt, x_train.txt and x_test.txt NOT containing the substrings mean and std after the files have been combined with the file features.txt, have been dropped from the dataset.
+2. Fields (columns) in the files y_train.ttxt, y_test.txt, x_train.txt and x_test.txt NOT containing the substrings mean and std after the files have been combined with the file features.txt, have been dropped from the dataset. The resulting table is named table_tidy
 
-3. Labels / activitynames have been edited. Letters are now lowercase, and "_" have been removed. Labels have also been added to the dataset, so that the activity in each record (row) can be identified by name and not only the corresponding integer ID. 
+3. Labels / activitynames have been edited. Letters are now lowercase, and "_" have been removed. Labels have also been added to the dataset, so that the activity in each record (row) can be identified by name and not only the corresponding integer ID (This could just as well have been a part of the next step).
 
-### Packages used are:
+4. According to the principles of tidy data and the suggestions in the Coursera lecture "Editing text variables", the names of variables should be: all lower case when possible, descriptive, not duplicated, and not have underscores or dots or white spaces. Here's an example of variable names in the dataset: tBodyAcc-mean()-Y. It's hard to come up with a name that is tidy and still sufficiently descriptive. My suggestion is to remove parentheses and other symbols, make all letters lower case, and explain the "t" in tbody. Thus, this particular name will look like this: timebody_accmeany. I've added an underscore which should not be there according to the list above, but I think it looks nicer and makes the names easier to read.
+
+5. My interpretation of this step is to focus on the averages of the averages that have been listed under step 2. I could just as well have included the average of the standard deviaton fields in the very same table, but I don't think it would make much sence to look at an aggregated average of standard devations. The table from this step is named table_tidy_averages. The first and second fields are subjects and activities. The remaining fields are pupulated with the averages of the fields containing averages for each feature from the dataset.
+
+### Packages used in the code are:
 + sqldf
 + data.table
-
 
 
 ### An example of sql syntax applied in the R code:
