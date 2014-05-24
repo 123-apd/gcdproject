@@ -25,6 +25,9 @@ As you may have noticed, the assignment has been subject to a lot of discussion 
 ### List B - My interpretations and solutions
 1. I've merged the txt files subject_train.txt, y_train.txt, x_train.txt, subject_test.txt, y_test.txt, X_test.txt, features.txt and labels.txt 
 
+2. Fields (columns) in the files y_train.ttxt, y_test.txt, x_train.txt and x_test.txt NOT containing the substrings mean and std after the files have been combined with the file features.txt, have been dropped from the dataset.
+
+
 ### Packages used are:
 + sqldf
 + data.table
