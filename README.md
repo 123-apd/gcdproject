@@ -12,7 +12,7 @@ This table includes data that are gathered from the gyro in a cellular phone, as
 As you may have noticed, the assignment has been subject to a lot of discussion on the Coursera forums due to the many ways the assignment can be solved. Below are two lists. List A contains the different steps the assignment requests. List B shows how I have interpreted and solved the different steps.
 
 ### List A - The assignments
-1. Merges the training and the test sets to create one data set.
+1. Merge the training and the test sets to create one data set.
 
 2. Extract only the measurements on the mean and standard deviation for each measurement.
 
@@ -23,8 +23,7 @@ As you may have noticed, the assignment has been subject to a lot of discussion 
 5. Create a second, independent tidy data set with the average of each variable for each activity and each subject.
 
 ### List B - My interpretations and solutions
-
-
+1. I've merged the txt files subject_train, y_train.txt
 
 ### Packages used are:
 + sqldf
