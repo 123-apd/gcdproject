@@ -38,10 +38,12 @@ As you may have noticed, the assignment has been subject to a lot of discussion 
 + data.table
 
 
-### An example of sql syntax applied in the R code:
+### An example of some simple sql syntax applied in the R code:
 
 tbl5 <- sqldf("select tbl4.*, labls.V2 actname from  labls, tbl4 where labls.V1 = tbl4.actid order by tbl4.key1")
 
 ### What it does:
 Create a table named tbl5, by selecting all columns in the table tbl4, and combine with activity names in the table labls.
 This creates a columns named actname in tbl5, and all values in tbl5 are sorted by the original order in tbl4 by looking at the column tbl4.key1.
+
+### An example of a more advanced sql query:
