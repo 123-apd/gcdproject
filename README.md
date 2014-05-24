@@ -4,14 +4,25 @@ Getting and cleaning data - The project
 
 This file contains a description of the R codes found in the file run_analysis.R
 The R code combines different datasets from the Machine Learning Repository, and produces a tidy table.
-This table includes data that are gathered from the gyro in a cellular phone, as well as the recorded activity of the indiviuals carrying the phone. The data can then be used to predict the activity of individuals by interpreting the gyro data. The table contains both observations (training data), and predictions (test data). The tidy table consists only of columns from the gyro that descripe means and standard deviations of other variables.
+This table includes data that are gathered from the gyro in a cellular phone, as well as the recorded activity of the indiviuals carrying the phone. The data can then be used to predict the activity of individuals by interpreting the gyro data. The table contains two sets of the recorded data( training data and test data). 
 
 ### More information on the datasetes available here:
 [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones#)
 
+As you may have noticed, the assignment has been subject to a lot of discussion on the Coursera forums due to the many ways the assignment can be solved. Below are two lists. List A contains the different steps the assignment requests. List B shows how I have interpreted and solved the different steps.
+
+### List A - The assignments
+
+
+### List B - My interpretations and solutions
+
+
+
 ### Packages used are:
 + sqldf
 + data.table
+
+
 
 ### An example of sql syntax applied in the R code:
 
