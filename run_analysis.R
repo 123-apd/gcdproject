@@ -2,19 +2,16 @@
 # Getting and Cleaning Data Project
 
 # Settings
-rm(list=ls())
-getwd()
-setwd("C:/Users/ad2888/Desktop/Coursera/getcleandata")
+# The Code assumes that the working directory is C:/gcdproject, and that the data is stored in 
+# C:/gcdproject/UCI HAR Dataset
+
 setwd("C:/gcdproject")
-dir()
 
 # Packages
 require(sqldf)
 require(data.table)
 
-# Getting data 1/2
-
-# download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip", destfile = "projectdata.zip")
+# Getting data 
 
 # Retrieving values from working directory
 s_tr <- data.table(read.table("UCI HAR Dataset/train/subject_train.txt", comment.char = "", colClasses="numeric"))
@@ -27,6 +24,9 @@ x_ts <- data.table(read.table("UCI HAR Dataset/test/X_test.txt"))
 
 feats <- data.table(read.table("UCI HAR Dataset/features.txt"))
 labls <- data.table(read.table("UCI HAR Dataset/activity_labels.txt"))
+labls$V2 <- tolower(labls$V2)
+labls$V2 <- gsub("_", '', labls$V2, fixed = T)
+labls
 
 # Renaming feats
 feats$V1 <- NULL
@@ -61,6 +61,7 @@ remove(old_y_names); remove(new_y_names)
 idtrain <- (1:nrow(x_tr))
 idtrain[1:nrow(x_tr)] = "train"
 DT_idtrain <- data.table(idtrain)
+
 # Rename variable in DT_idtest for later matching
 setnames(DT_idtrain,old = "idtrain", new = "idtraintest")
 
@@ -77,7 +78,6 @@ old_x_names2 <- names(x_ts)
 setnames(x_tr,old = old_x_names1, new = as.character(feats$features))
 setnames(x_ts,old = old_x_names2, new = as.character(feats$features))
 remove(old_x_names1); remove(old_x_names2)
-
 
 # Building table step 1 :  x_tr, s_tr,  y_tr and DT_idtrain
 tbl1 <- cbind(x_tr, s_tr, y_tr,DT_idtrain)
@@ -102,7 +102,10 @@ tbl4 <- cbind(key1, tbl3)
 # Add activity names to tbl4 from the feats table
 tbl5 <- sqldf("select tbl4.*, labls.V2 actname from  labls, tbl4 where labls.V1 = tbl4.actid order by tbl4.key1")
 
-# Findind columns that contain means
+# Making the table requested in step 2 in the assignment 
+table_mean_std <- tbl5
+
+# Finding columns that contain means
 names_mean_idx <- grep("mean()",names(tbl5))
 names_mean_idx
 
@@ -114,7 +117,6 @@ tbl_mean_names_old <- names(tbl_mean)
 mname1 <- tbl_mean_names_old
 
 # Making understandable names in tbl_mean according to the principles of tidy data
-
 mname2 <-gsub("___", '', mname1, fixed = T)
 mname2 <-gsub("__", '', mname1, fixed = T)
 mname2 <-gsub("_", '', mname1, fixed = T)
@@ -132,13 +134,12 @@ mname5
 setnames(tbl_mean,old = tbl_mean_names_old, new = mname5)
 tbl_mean_tidy <- cbind(tbl5$key1, tbl_mean, tbl5$subjects, tbl5$idtraintest, tbl5$actname)
 setnames(tbl_mean_tidy,old = c("tbl5$key1","tbl5$subjects", "tbl5$idtraintest", "tbl5$actname"), new =c("key1", "subjects", "idtraintest", "actname"))
-fix(tbl_mean_tidy)
-
+#fix(tbl_mean_tidy)
 
 tbl_sql_names <- data.table(mname5)
-View(tbl_sql_names)
+# View(tbl_sql_names)
 
-# Preparing for monster MEAN query
+# Preparing for query
 
 i = 0
 #qstr <- paste(
@@ -157,6 +158,7 @@ qstr2
 runstr <- ""
 addstr <- ""
 
+# Stores all field names for which we would like to compute averages. The resulting string is later used in the sqldf query.
 for (i in 1:length(mname5) ) {
   #print(i)
   #newstr <- paste(str1,mname5[i],str2, sep = "")
@@ -169,56 +171,21 @@ for (i in 1:length(mname5) ) {
 runstr2 <- substring(runstr, 2, nchar(runstr))
 runstr2
 
-# sparr1 <- "select subjects, actname, avg(timebody_accmeanx) from tbl_mean_tidy  group by subjects, actname"
-
 quer1 <- "select subjects, actname, "
 quer2 <-  " from tbl_mean_tidy  group by subjects, actname"
 
-# Executing monster MEAN query
+# Executing query
 bigquery <- paste(quer1, runstr2, quer2, sep = "")
 bigquery
 
-sqxxx <- sqldf(bigquery)
-fix(sqxxx)
+table_tidy_averages <- sqldf(bigquery)
 
+# Making field names more tidy
+oldnames <- names(table_tidy_averages)
+tidynames <- gsub("avg(", 'average_', oldnames, fixed = T)
+tidynames <- gsub(")", '', tidynames, fixed = T)
+tidynames <- gsub("actname", 'activity', tidynames, fixed = T)
+setnames(table_tidy_averages,old = oldnames, new = tidynames)
 
-# Preparing for monster STDEV query
-# FORTSETT HER I DAG
-
-
-sqx1 <- sqldf("select subjects, actname, avg(timebody_accmeanx) from tbl_mean_tidy  group by subjects, actname")
-
-sqx2 <- sqldf("select subjects, actname, avg(timebody_accmeanx), 
-              avg(timegravity_accmeanx),
-              avg(timebody_accjerkmeanx),
-              avg(timebody_gyromeanx)
-              from tbl_mean_tidy  group by subjects, actname")
-
-sqx3 <- sqldf("select * from tbl_mean_tidy Pivot (avg(subjects) for subjects  ")
-
-sgx4 <- sqldf(sparr1)
-
-
-
-
-
-# Create a second, independent tidy data set with the average of each variable for each activity and each subject.
-# sqx1 <- sqldf("select IncomeGroup, stdev(Rank)  from dtx group by IncomeGroup")
-
-# sqx1 <- sqldf("select tbl_mean, stdev(Rank)  from dtx group by IncomeGroup")
-
-# Findind columns that contain standard deviations !!!!!!
-names_std_idx <- grep("std()",names(tbl5))
-names_std_idx
-names_std <- names(tbl5)[names_std_idx]
-names_std
-tbl_std <- subset(tbl5, select=c(names_std))
-
-# Making understandable names in tbl_mean according to the principles of tidy data
-
-# Tidy table step 1
-tbl_tidy1 <- cbind(tbl_mean, tbl_std)
-fix(tbl_tidy1)
-
-
-# Write dataset as .csv
+# Stores table_tidy_averages as a csv file in the working directory
+write.table(table_tidy_averages, "c:/gcdproject/table_tidy_averages.txt", sep=",")
