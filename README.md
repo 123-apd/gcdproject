@@ -27,6 +27,7 @@ As you may have noticed, the assignment has been subject to a lot of discussion 
 
 2. Fields (columns) in the files y_train.ttxt, y_test.txt, x_train.txt and x_test.txt NOT containing the substrings mean and std after the files have been combined with the file features.txt, have been dropped from the dataset.
 
+3. Labels / activitynames have been edited. Letters are now lowercase, and "_" have been removed.
 
 ### Packages used are:
 + sqldf
