@@ -160,12 +160,8 @@ addstr <- ""
 
 # Stores all field names for which we would like to compute averages. The resulting string is later used in the sqldf query.
 for (i in 1:length(mname5) ) {
-  #print(i)
-  #newstr <- paste(str1,mname5[i],str2, sep = "")
-  #print(newstr)
   addstr<- paste(str1, mname5[i], str2, sep = "")
   runstr <- paste(runstr, addstr, sep = ",")
-  print(addstr)
 }
 
 runstr2 <- substring(runstr, 2, nchar(runstr))
@@ -176,9 +172,13 @@ quer2 <-  " from tbl_mean_tidy  group by subjects, actname"
 
 # Executing query
 bigquery <- paste(quer1, runstr2, quer2, sep = "")
-bigquery
+tbl_new <- sqldf("select subjects, actname, avg(frequencybody_bodygyrojerkmagmeanfreq), avg(frequencybody_bodygyrojerkmagmeanfreq) from tbl_mean_tidy  group by subjects, actname")
+fix(tbl_new)
+
+fix(bigquery)
 
 table_tidy_averages <- sqldf(bigquery)
+fix(table_tidy_averages)
 
 # Making field names more tidy
 oldnames <- names(table_tidy_averages)
